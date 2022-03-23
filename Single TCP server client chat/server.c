@@ -45,11 +45,6 @@ int main(int argc, char *argv[])
           error("ERROR on accept");
      while(1)
      {
-     	bzero(buffer,256);
-     	n = read(newsockfd,buffer,255);
-     	if (n < 0) 
-          error("ERROR reading from socket");
-     	printf("Client : %s\n",buffer);
         bzero(buffer,256);
         fgets(buffer,256,stdin);
      	n = write(newsockfd,buffer,strlen(buffer));
@@ -58,6 +53,11 @@ int main(int argc, char *argv[])
        int i = strncmp("Bye",buffer,3);
        if(i==0)
        break;
+        bzero(buffer,256);
+        n = read(newsockfd,buffer,255);
+        if (n < 0) 
+          error("ERROR reading from socket");
+        printf("Client : %s\n",buffer);
 }
 close(newsockfd);
 close(sockfd);
